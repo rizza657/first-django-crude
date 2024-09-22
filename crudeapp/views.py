@@ -46,3 +46,14 @@ def delete(request, ck):
 def todo_list(request):
     todos = Todo.objects.all().order_by('-created_at')  # Get all todos, ordered by creation date
     return render(request, 'todo_list.html', {'todos': todos})
+
+def search_todos(request):
+    query = request.GET.get('query', '')
+    todos = Todo.objects.filter(title__icontains=query).order_by('-created_at')
+    return render(request, 'todo_list.html', {'todos': todos, 'query': query})
+
+def complete_todo(request, ck):
+    todo = get_object_or_404(Todo, id=ck)
+    todo.completed = True
+    todo.save()
+    return redirect('todo_list')

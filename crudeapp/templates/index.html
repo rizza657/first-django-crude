@@ -5,14 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .todo-item {
+            transition: all 0.3s ease;
+        }
+        .todo-item:hover {
+            background-color: #f8f9fa;
+        }
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
     <section class="vh-100 bg-image" style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
         <div class="mask d-flex align-items-center h-100 gradient-custom-3">
             <div class="container h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="col-12 col-md-10 col-lg-8 col-xl-7">
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body p-5">
                                 <h2 class="text-uppercase text-center mb-5">Todo List</h2>
@@ -22,29 +36,45 @@
                                     <div class="mb-3">
                                         {{form.as_p}}
                                     </div>
-                                    <div class="d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-white">Add Todo</button>
+                                    <div class="d-flex justify-content-between">
+                                        <button type="submit" class="btn btn-success gradient-custom-4 text-white">
+                                            <i class="fas fa-plus me-2"></i>Add Todo
+                                        </button>
+                                        <a href="{% url 'todo_list' %}" class="btn btn-primary">
+                                            <i class="fas fa-list me-2"></i>View All Todos
+                                        </a>
                                     </div>
                                 </form>
-                                
-                                <!-- New button to navigate to todo_list -->
-                                <div class="d-flex justify-content-center mt-3">
-                                    <a href="{% url 'todo_list' %}" class="btn btn-primary btn-block btn-lg">View All Todos</a>
-                                </div>
                                 
                                 {% if todos %}
                                     <h3 class="mt-4 mb-3">Your Todos</h3>
                                     {% for todo in todos %}
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <p class="mb-0">{{todo}}</p>
-                                            <div>
-                                                <a href="{% url 'update' todo.id %}" class="btn btn-sm btn-primary me-2">Update</a>
-                                                <a href="{% url 'delete' todo.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                        <div class="todo-item card mb-3 {% if todo.completed %}completed{% endif %}">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="card-title mb-1">{{ todo.title }}</h5>
+                                                    <small class="text-muted">Created: {{ todo.created_at|date:"M d, Y" }}</small>
+                                                </div>
+                                                <p class="card-text mb-2">
+                                                    <span class="badge {% if todo.completed %}bg-success{% else %}bg-warning{% endif %}">
+                                                        {% if todo.completed %}Completed{% else %}Pending{% endif %}
+                                                    </span>
+                                                </p>
+                                                <div class="d-flex justify-content-end">
+                                                    <a href="{% url 'update' todo.id %}" class="btn btn-sm btn-outline-primary me-2">
+                                                        <i class="fas fa-edit me-1"></i>Update
+                                                    </a>
+                                                    <a href="{% url 'delete' todo.id %}" class="btn btn-sm btn-outline-danger">
+                                                        <i class="fas fa-trash-alt me-1"></i>Delete
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     {% endfor %}
                                 {% else %}
-                                    <p class="text-center mt-4">No todos yet. Add one above!</p>
+                                    <div class="alert alert-info mt-4" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i>No todos yet. Add one above!
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
@@ -54,7 +84,5 @@
         </div>
     </section>
 
-    <!-- Bootstrap JS (optional, for certain Bootstrap features) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcT"></script>
-</body>
-</html>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5
