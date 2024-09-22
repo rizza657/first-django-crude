@@ -19,7 +19,8 @@ Including another URLconf
 from django.contrib import admin #The contrib module includes several built-in features like authentication, sessions, and the admin interface.
 #parameters are variable that are defined in the fuction definition  
 #This module in Django that provides utilities for URL handling and routing within your web application.
-from django.urls import path, include
+from django.urls import path, include #include --- is Used to include another URLconf, allowing for modular URL routing. 
+# This is useful for organizing URLs across multiple apps.
 
 urlpatterns = [
     path('admin/', admin.site.urls),
