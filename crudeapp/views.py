@@ -1,6 +1,6 @@
 # get_object_or_404 ---- It retrieves an object from the database based on the given parameters.
 # If the object is found, it returns it; if not, it raises a 404 Not Found error.
-# redirect ---- It can be used in views to navigate users away from the current page, 
+# redirect ---- is used in views to navigate users away from the current page, 
 # typically after performing an action like submitting a form.
 # render ---- Combines a given template with a context dictionary and returns an HttpResponse object.
 from django.shortcuts import render, redirect, get_object_or_404  # The django.shortcuts -- module provides essential functions that streamline common tasks in Django views, making it easier to handle rendering, redirects, and error handling efficiently.
@@ -22,7 +22,7 @@ def index(request):
         form = TodoForm(request.POST)  # Form instantiation: Create TodoForm with POST data
         if form.is_valid():       # Form validation: Check if the submitted data is valid
             form.save()           # Database operation: Save the new Todo object
-            messages.success(request, 'Todo updated successfully!')
+            messages.success(request, 'Todo created successfully!')
             return redirect('index')  # Redirect function: Redirect to the index page
        
     return render(request, 'index.html', {'todos': todos, 'form': form})  # Render function: Display the index template
@@ -42,7 +42,7 @@ def index(request):
 # allowing users to edit an existing task and submit changes, 
 # with proper form handling and user feedback through messages.
 
-
+#request.method: A string representing the HTTP method used
 
 
 def update(request, ck):
@@ -84,3 +84,7 @@ def complete_todo(request, todo_id):
     messages.success(request, f'Todo "{todo.title}" {status}!')
     
     return redirect('index')  # Make sure 'index' is the name of your todo list URL
+
+
+
+
