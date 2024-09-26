@@ -27,7 +27,7 @@ from django.contrib import admin #The contrib module includes several built-in f
 from django.urls import path, include #include --- to include another URLconf, allowing for modular URL routing. 
 # This is useful for organizing URLs across multiple apps.
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
+urlpatterns = [      #<-- li
+    path('admin/', admin.site.urls), #T URL configurations provided by Django's admin module, which handles the routing of requests to the appropriate views for managing the application's data.
     path('', include('crudeapp.urls'))
 ]
